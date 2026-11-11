@@ -1,0 +1,289 @@
+!DOCTYPE html>
+html lang="en" dir="rtl">
+head>
+  meta charset="UTF-8">
+  meta name="viewport" content="width=device-width, initial-scale=1.0">
+  title>אקרוויסטה חוזים / AcreVista Contractstitle>
+  style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f5f5f5; color: #333; direction: rtl; }
+    .container { max-width: 900px; margin: 0 auto; padding: 16px; }
+    header { background: #1a5276; color: #fff; padding: 20px; text-align: center; }
+    header h1 { font-size: 1.4em; }
+    header p { font-size: 0.85em; opacity: 0.9; margin-top: 4px; }
+    .contract-type-section { background: #fff; border-radius: 8px; padding: 16px; margin: 16px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .contract-type-section h2 { font-size: 1.1em; margin-bottom: 8px; color: #1a5276; }
+    .contract-type-section p { font-size: 0.9em; color: #555; margin-bottom: 12px; }
+    label { display: block; font-weight: bold; margin-top: 12px; font-size: 0.9em; }
+    label span { color: red; }
+    input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 0.9em; margin-top: 4px; direction: rtl; }
+    textarea { min-height: 80px; resize: vertical; }
+    .row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .row > div { flex: 1; min-width: 200px; }
+    .btn { display: inline-block; padding: 12px 24px; border: none; border-radius: 6px; font-size: 1em; cursor: pointer; margin: 8px 4px 8px 0; }
+    .btn-primary { background: #1a5276; color: #fff; }
+    .btn-secondary { background: #2980b9; color: #fff; }
+    .btn-print { background: #27ae60; color: #fff; }
+    .btn-clear { background: #e74c3c; color: #fff; }
+    .preview-section { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 24px; margin: 16px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: none; }
+    .preview-section.visible { display: block; }
+    .preview-section h2 { color: #1a5276; margin-bottom: 16px; font-size: 1.2em; }
+    .preview-section h3 { margin-top: 16px; margin-bottom: 8px; color: #2c3e50; }
+    .preview-section p, .preview-section div { line-height: 1.6; font-size: 0.9em; }
+    .disclaimer { background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 16px; margin: 16px 0; }
+    .disclaimer h3 { color: #856404; }
+    .disclaimer p { color: #856404; font-size: 0.85em; line-height: 1.5; }
+    .signatures { display: flex; gap: 16px; flex-wrap: wrap; margin: 16px 0; }
+    .sig-box { flex: 1; min-width: 250px; }
+    .sig-box label { margin-bottom: 8px; }
+    canvas { border: 2px dashed #999; border-radius: 4px; cursor: crosshair; background: #fafafa; touch-action: none; width: 100%; max-width: 400px; }
+    .clear-sig { background: #e74c3c; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8em; margin-top: 4px; }
+    .hidden { display: none; }
+    .hidden-future { display: none; }
+    @media print {
+      .no-print { display: none !important; }
+      .preview-section { display: block !important; border: none; box-shadow: none; }
+      body { background: #fff; }
+    }
+    @media (max-width: 600px) {
+      .container { padding: 8px; }
+      .row { flex-direction: column; }
+      .signatures { flex-direction: column; }
+    }
+  style>
+head>
+body>
+  div class="container">
+    header>
+      h1>אקרוויסטה לנד CMKY - מערכת יצירת חוזיםh1>
+      p> AcreVista Land CMKY — Contract Generation Appheader>
+
+      div class="contract-type-section no-print">
+        h2>בחר סוג חוזה / Select Contract Typeh2>
+        p>הסבר קצר על כל סוג חוזה מופיע מתחת לכל אפשרות.p>
+        select id="contractType">
+          option value="purchase">רכישת נדלן / Real Estate Purchaseoption>
+          option value="land">רכישת קרקע / Land Purchaseoption>
+          option value="assignment">העברה / Assignmentoption>
+          option value="amendment">תוספת / Amendmentoption>
+          option value="termination">ביטול חוזה / Terminationoption>
+          option value="loi">מכתב כוונות / Letter of Intentoption>
+        select>
+        div id="typeDesc" class="hidden-future">div>
+      div>
+
+      div class="contract-type-section no-print">
+        h2>פרטי הצדדים / Parties Informationh2>
+        div class="row">
+          div>
+            label for="sellerName">מוכר / Seller: label>
+            input id="sellerName" placeholder="שם המוכר">
+          div>
+          div>
+            label for="buyerName">קונה / Buyer: label>
+            input id="buyerName" value="AcreVista Holdings LLC">
+          div>
+          div>
+            label for="buyerAddress">כתובת הקונה / Buyer Address: label>
+            input id="buyerAddress">
+          div>
+        div>
+        label for="apn">מק"ט / APN: label>
+        input id="apn" placeholder="מק"ט המקרקעין">
+        label for="price">מחיר / Price: label>
+        input id="price" type="number" placeholder="0.00">
+        label for="deposit">פיקדון / Deposit: label>
+        input id="deposit" type="number" placeholder="0.00">
+        label for="inspectionDays">ימי בדיקה / Inspection Days: label>
+        input id="inspectionDays" type="number" value="17">
+        label for="closingDate">תאריך סגירה / Closing Date: label>
+        input id="closingDate" type="date">
+        label for="originalAgreementDate">תאריך הסכם מקורי / Original Agreement Date: label>
+        input id="originalAgreementDate" type="date">
+        label for="titleCompany">חברת תיווך שטרות / Title Company: label>
+        input id="titleCompany" placeholder="שם חברת התיווך">
+        label for="specialProvisions">הוראות מיוחדות / Special Provisions: label>
+        textarea id="specialProvisions" placeholder="הכנס הוראות מיוחדות כאן...">textarea>
+      div>
+
+      div class="no-print" style="text-align:center;">
+        button class="btn btn-primary" onclick="generatePreview()">צור תצוגה מקדימה / Generate Previewbutton>
+        button class="btn btn-clear" onclick="clearForm()">נקה הכל / Clear Allbutton>
+      div>
+
+      div id="preview" class="preview-section">
+        h2>תצוגה מקדימה של החוזה / Contract Previewh2>
+        div id="previewContent">div>
+        div class="disclaimer">
+          h3>הערה חשובה — DISCLAIMERh3>
+          p>החוזה הנ"ל הוא טיוטה בלבד לנוכחות משפטית. אין לראות במסמך זה ייעוץ משפטי. מומלץ מאוד להתייעץ עם עו"ד מוסמך לפני חתימה על כל חוזה. This document is a DRAFT only and does not constitute legal advice. Consult a licensed attorney before signing any contract. No legal liability is assumed by AcreVista or its agents for the content of this draft.h3>
+          p>טיוטה / משפטי — חובה לאישור עו"ד / REQUIRES ATTORNEY REVIEW
+          p>This is a DRAFT — LEGAL REVIEW REQUIREDp>
+          p>כל המידע הינו טיוטה בלבד ואינו מהווה תחליף לייעוץ משפטי. AcreVista Holdings LLC אינה נושאת באחריות לתוכן החוזה.
+          p>ALL INFORMATION IS DRAFT ONLY AND DOES NOT SUBSTITUTE LEGAL COUNSEL. AcreVista Holdings LLC assumes no liability for contract content.p>
+        div>
+
+        h2>חתימות / Signaturesh2>
+        div class="signatures">
+          div class="sig-box">
+            label>חתימת מוכר / Seller Signature:label>
+            canvas id="sellerSig" width="400" height="150">canvas>
+            button class="clear-sig" onclick="clearSignature('sellerSig')">נקה חתימהbutton>
+          div>
+          div class="sig-box">
+            label>חתימת קונה / Buyer Signature:label>
+            canvas id="buyerSig" width="400" height="150">canvas>
+            button class="clear-sig" onclick="clearSignature('buyerSig')">נקה חתימהbutton>
+          div>
+        div>
+
+        div class="no-print" style="text-align:center; margin-top:16px;">
+          button class="btn btn-print" onclick="window.print()">הדפס / צא PDF / Print to PDFbutton>
+        div>
+      div>
+
+    div>
+  body>
+  script>
+    const contractTypes = {
+      purchase: {
+        he: 'חוזה רכישה — לרכישת נכס נדלן (מבנה + קרקע). כולל תנאים כמו בדיקת מבנה, מימון משכנתא, העברת שטר.',
+        en: 'PURCHASE AGREEMENT — For the purchase of real property (building + land). Includes conditions such as building inspection, mortgage financing, and deed transfer.'
+      },
+      land: {
+        he: 'חוזה רכישת קרקע — לרכישת קרקע ללא מבנים. כולל תנאים כמו בדיקת קרקע, זכויות בנייה, תב"ע.',
+        en: 'LAND PURCHASE AGREEMENT — For the purchase of vacant land without structures. Includes conditions such as soil testing, building rights, and zoning compliance (Tzava). '
+      },
+      assignment: {
+        he: 'חוזה העברה — להעברת זכויות חוזה מקורי לצד שלישי. כולל הסכמת המוכר המקורי.',
+        en: 'ASSIGNMENT AGREEMENT — For the transfer of rights under an original contract to a third party. Includes original seller consent.'
+      },
+      amendment: {
+        he: 'חוזה תוספת — לשינוי תנאי חוזה קיים (מחיר, תאריכים, תנאים נוספים). כולל אישור כל הצדדים.',
+        en: 'AMENDMENT AGREEMENT — To modify terms of an existing contract (price, dates, additional conditions). Includes all parties consent.'
+      },
+      termination: {
+        he: 'חוזה ביטול — לביטול חוזה קיים בהסכמת הצדדים. כולל תנאי החזרת פיקדון.',
+        en: 'TERMINATION AGREEMENT — To terminate an existing contract by mutual consent. Includes deposit return conditions.'
+      },
+      loi: {
+        he: 'מכתב כוונות — מסמך מקדים המציג כוונת הצדדים לעסקה לפני חוזה מחייב.',
+        en: 'LETTER OF INTENT — A preliminary document expressing the parties intent to negotiate a transaction before a binding contract.'
+      }
+    };
+
+    const contractClauses = {
+      purchase: {
+        he: 'תנאי הרכישה:\n1. המוכר מתחייב להעביר שטר נקי מטעונות.\n2. הקונה רשאי לבצע בדיקת מבנה במהלך ימי הבדיקה.\n3. בעד התשלום יועבר לחשבון הנאמנות של חברת התיווך.\n4. הסגירה תתבצע בתוך 30 ימים מסיום ימי הבדיקה.',
+        en: 'PURCHASE TERMS:\n1. Seller warrants clear title free of encumbrances.\n2. Buyer may conduct building inspection during inspection period.\n3. Payment shall be transferred to Title Company escrow account.\n4. Closing shall occur within 30 days after inspection period expiry.'
+      },
+      land: {
+        he: 'תנאי רכישת הקרקע:\n1. המוכר מתחייב שהקרקע פנויה מטעונות וזכויות צד שלישי.\n2. הקונה רשאי לבצע סקר קרקע ובדיקות סביבתיות.\n3. זכויות בנייה כוללות התאמה לתב"ע המקומית.\n4. המוכר מתחייב למסור כל מסמך תכנוני רלוונטי.',
+        en: 'LAND PURCHASE TERMS:\n1. Seller warrants land is free of encumbrances and third-party rights.\n2. Buyer may conduct soil testing and environmental assessment.\n3. Building rights include compliance with local zoning (Tzava).\n4. Seller shall provide all relevant planning documents.'
+      },
+      assignment: {
+        he: 'תנאי ההעברה:\n1. הצד הממנה מוסר את כל הזכויות בחוזה המקורי.\n2. המאמץ חייב באותן החובות כפי הצד הממנה.\n3. המוכר המקורי מסכים להעברה.\n4. סכום ההעברה יועבר לנאמנות.',
+        en: 'ASSIGNMENT TERMS:\n1. Assignor transfers all rights under the original contract.\n2. Assignee assumes all obligations of Assignor.\n3. Original Seller consents to assignment.\n4. Assignment fee shall be deposited to escrow.'
+      },
+      amendment: {
+        he: 'תנאי התוספת:\n1. התוספת משנה את הסעיף/ים המצוינים בחוזה המקורי.\n2. כל שאר תנאי החוזה המקורי נשארים בתוקף.\n3. שני הצדדים מאשרים את התוספת בחתימה.\n4. התוספת חלה ממועד חתימתה.',
+        en: 'AMENDMENT TERMS:\n1. This amendment modifies the specified section(s) of the original contract.\n2. All other terms of the original contract remain in full force.\n3. Both parties execute this amendment.\n4. This amendment is effective from execution date.'
+      },
+      termination: {
+        he: 'תנאי הביטול:\n1. שני הצדדים מסכימים לביטול החוזה.\n2. כל סכומים ששולמו יוחזרו כמפורט.\n3. כל הצדדים משתחררים מחובות הדדיים.\n4. הסעיפים הקונפידנציאליים יישארו בתוקף.',
+        en: 'TERMINATION TERMS:\n1. Both parties mutually agree to terminate the contract.\n2. All payments made shall be returned as specified.\n3. All parties are released from mutual obligations.\n4. Confidentiality provisions shall remain in effect.'
+      },
+      loi: {
+        he: 'תנאי מכתב הכוונות:\n1. מסמך זה אינו מחייב משפטית (אלא אם צוין אחרת).\n2. הצדדים ינהלו משאיות טובת אמונה.\n3. המסמך ימומש במסמך מחייב בתום המשאיות.\n4. תוקף המסמך: 60 ימים ממועד החתימה.',
+        en: 'LOI TERMS:\n1. This document is non-binding (except where stated otherwise).\n2. Parties shall negotiate in good faith.\n3. Final binding agreement to be executed upon conclusion of negotiations.\n4. Validity period: 60 days from execution date.'
+      }
+    };
+
+    function generatePreview() {
+      const type = document.getElementById('contractType').value;
+      const typeInfo = contractTypes[type];
+      const clauses = contractClauses[type];
+      document.getElementById('typeDesc').innerHTML = typeInfo.he + '
+' + typeInfo.en + '
+';
+      document.getElementById('typeDesc').classList.remove('hidden-future');
+      const seller = document.getElementById('sellerName').value || '[לא צוין / Not Specified]';
+      const buyer = document.getElementById('buyerName').value || '[לא צוין / Not Specified]';
+      const address = document.getElementById('buyerAddress').value || '[לא צוין / Not Specified]';
+      const apn = document.getElementById('apn').value || '[לא צוין / Not Specified]';
+      const price = document.getElementById('price').value || '0';
+      const deposit = document.getElementById('deposit').value || '0';
+      const inspection = document.getElementById('inspectionDays').value || '17';
+      const closing = document.getElementById('closingDate').value || '[לא צוין / Not Specified]';
+      const original = document.getElementById('originalAgreementDate').value || '[לא צוין / Not Specified]';
+      const title = document.getElementById('titleCompany').value || '[לא צוין / Not Specified]';
+      const special = document.getElementById('specialProvisions').value || '[אין / None]';
+      const today = new Date().toLocaleDateString('en-US');
+      const html = 'החוזה נערך ב-' + today + '
+בין:
+  • המוכר (Seller): ' + seller + '
+  • הקונה (Buyer): ' + buyer + '
+  • כתובת הקונה: ' + address + '
+פרטי המקרקעין:
+  • מק"ט (APN): ' + apn + '
+  • מחיר: $' + Number(price).toLocaleString() + '
+  • פיקדון: $' + Number(deposit).toLocaleString() + '
+  • ימי בדיקה: ' + inspection + '
+  • תאריך סגירה: ' + closing + '
+  • תאריך הסכם מקורי: ' + original + '
+  • חברה: ' + title + '
+סעיף מיוחד: ' + special + '
+' + clauses.he + '
+' + clauses.en;
+      document.getElementById('previewContent').innerHTML = html;
+      document.getElementById('preview').classList.add('visible');
+      document.getElementById('preview').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function clearForm() {
+      if(confirm('להבטל? / Are you sure?')) {
+        document.querySelectorAll('input[type="number"], input[type="text"], input[type="date"], textarea').forEach(el => el.value = '');
+        document.getElementById('buyerName').value = 'AcreVista Holdings LLC';
+        document.getElementById('inspectionDays').value = '17';
+        document.getElementById('contractType').selectedIndex = 0;
+        document.getElementById('preview').classList.remove('visible');
+        document.getElementById('typeDesc').classList.add('hidden-future');
+        clearSignature('sellerSig');
+        clearSignature('buyerSig');
+      }
+    }
+
+    function clearSignature(canvasId) {
+      const canvas = document.getElementById(canvasId);
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function setupSignature(canvasId) {
+      const canvas = document.getElementById(canvasId);
+      const ctx = canvas.getContext('2d');
+      let drawing = false;
+      function getPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        if (e.touches) {
+          return { x: (e.touches[0].clientX - rect.left) * scaleX, y: (e.touches[0].clientY - rect.top) * scaleY };
+        }
+        return { x: (e.clientX - rect.left) * scaleX, y: (e.clientY - rect.top) * scaleY };
+      }
+      canvas.addEventListener('mousedown', (e) => { drawing = true; ctx.beginPath(); const pos = getPos(e); ctx.moveTo(pos.x, pos.y); });
+      canvas.addEventListener('mousemove', (e) => { if (!drawing) return; const pos = getPos(e); ctx.lineTo(pos.x, pos.y); ctx.stroke(); });
+      canvas.addEventListener('mouseup', () => drawing = false);
+      canvas.addEventListener('mouseleave', () => drawing = false);
+      canvas.addEventListener('touchstart', (e) => { e.preventDefault(); drawing = true; ctx.beginPath(); const pos = getPos(e); ctx.moveTo(pos.x, pos.y); }, { passive: false });
+      canvas.addEventListener('touchmove', (e) => { e.preventDefault(); if (!drawing) return; const pos = getPos(e); ctx.lineTo(pos.x, pos.y); ctx.stroke(); }, { passive: false });
+      canvas.addEventListener('touchend', () => drawing = false);
+      ctx.strokeStyle = '#000';
+      ctx.lineWidth = 2;
+    }
+
+    setupSignature('sellerSig');
+    setupSignature('buyerSig');
+  script>
+html>
